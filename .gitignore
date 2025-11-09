@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+.venv/
+
+# Pytest
+.pytest_cache/
+
+# VSCode
+<<<<<<< HEAD
+# .vscode/
+=======
+.vscode/
+>>>>>>> 0db0d2b44e5215c3375fc639b12ccde70e7bf01f

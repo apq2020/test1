@@ -1,0 +1,2 @@
+# 运行所有不是** slow 的测试**
+pytest -m "not slow"
