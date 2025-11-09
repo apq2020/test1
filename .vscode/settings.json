@@ -1,0 +1,49 @@
+{
+    // 让 VS Code 自动选 venv 里的 Python
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+    // 开启 Pylance 超强补全
+    "python.languageServer": "Pylance",
+    // 避免 VS Code 弄出几个重复的 Python 扩展
+    "python.analysis.indexing": true,
+    "python.analysis.autoImportCompletions": true,
+    // 告诉 Pylance 去 src 目录找模块，消除黄色波浪线
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/src"
+    ],
+    // 自动格式化：Black（稳定、不会改风格）
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true,
+    // import 自动整理
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    // Jupyter notebook 更快
+    "jupyter.askForKernelRestart": false,
+    // 终端用 UTF-8 没中文乱码
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "files.encoding": "utf8",
+    // 让终端也知道 src 目录，解决右上角运行按钮的 ModuleNotFoundError
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}\\src"
+    },
+    // 新 Python 文件自动加 .py 语法
+    "[python]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.rulers": [
+            88
+        ]
+    },
+    // 黑格式器的配置
+    "black-formatter.args": [
+        "--line-length=88"
+    ],
+    // --- Pytest 测试配置 ---
+    // 告诉 VS Code 在哪个目录下寻找测试文件
+    "python.testing.pytestArgs": [
+        "tests",
+        "-s" // 不要捕获 print 输出，直接显示
+    ],
+    "python.testing.unittestEnabled": false, // 关闭默认的 unittest 框架
+    "python.testing.pytestEnabled": true // 启用 pytest 框架
+}

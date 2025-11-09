@@ -1,0 +1,97 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Create Virtual Environment",
+            "type": "shell",
+            "command": "python -m venv .venv",
+            "problemMatcher": []
+        },
+        {
+            "label": "Update requirements.txt",
+            "type": "shell",
+            "command": "${config:python.defaultInterpreterPath} -m pip freeze > requirements.txt",
+            "problemMatcher": []
+        },
+        {
+            "label": "Install dependencies from requirements.txt",
+            "type": "shell",
+            "command": "${config:python.defaultInterpreterPath} -m pip install -r requirements.txt",
+            "problemMatcher": []
+        },
+        {
+            "label": "Remove .venv directory",
+            "type": "shell",
+            "command": "rmdir /s /q .venv",
+            "problemMatcher": []
+        },
+        {
+            "label": "Initialize Project",
+            "dependsOn": [
+                "Create Virtual Environment",
+                "Install dependencies from requirements.txt"
+            ],
+            "dependsOrder": "sequence", // 确保任务按顺序执行
+            "problemMatcher": []
+        },
+        {
+            "label": "Format with Black",
+            "type": "shell",
+            "command": "${config:python.defaultInterpreterPath} -m black src tests",
+            "problemMatcher": []
+        },
+        {
+            "label": "Lint with Flake8",
+            "type": "shell",
+            "command": "${config:python.defaultInterpreterPath} -m flake8 src tests",
+            "problemMatcher": [
+                "$python"
+            ]
+        },
+        {
+            "label": "Format & Lint Project",
+            "dependsOn": [
+                "Format with Black",
+                "Lint with Flake8"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Initialize & Push First Commit",
+            "type": "shell",
+            "command": "git init && git add . && git commit -m \"Initial commit\" && git branch -M main && git remote add origin \"${input:repoUrl}\" && git push -u origin main",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Initializes a new repository, makes the first commit, and pushes to a new remote URL."
+        },
+        {
+            "label": "Sync with Remote",
+            "type": "shell",
+            "command": "git add . && git commit -m \"${input:commitMessage}\" && git pull --rebase && git push",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Stages all changes, prompts for a commit message, pulls with rebase, and pushes."
+        }
+    ],
+    "inputs": [
+        {
+            "id": "commitMessage",
+            "type": "promptString",
+            "description": "Please enter your commit message",
+            "default": "feat: "
+        },
+        {
+            "id": "repoUrl",
+            "type": "promptString",
+            "description": "Enter the new remote repository HTTPS URL",
+            "default": "https://github.com/apq2020/python-template.git"
+        }
+    ]
+}

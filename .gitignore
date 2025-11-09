@@ -11,8 +11,4 @@ __pycache__/
 .pytest_cache/
 
 # VSCode
-<<<<<<< HEAD
 # .vscode/
-=======
-.vscode/
->>>>>>> 0db0d2b44e5215c3375fc639b12ccde70e7bf01f
